@@ -11,3 +11,5 @@ D:\GIT\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.exe
 D:\GIT\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.pdb
 D:\GIT\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.csprojAssemblyReference.cache
 D:\GIT\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.csproj.CoreCompileInputs.cache
+C:\Users\Alexey\Documents\GitHub\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.exe
+C:\Users\Alexey\Documents\GitHub\tspp_9-10_lab\tspp_9-10_pr\tspp_9-10_pr\obj\x86\Debug\tspp_9-10_pr.pdb
