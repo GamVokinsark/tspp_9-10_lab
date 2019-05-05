@@ -74,11 +74,12 @@ namespace Aviadispetcher
         /// <summary>
         /// Генерує таблицю з даними про абітурієнтів.
         /// </summary>
-        public void AddTable(abit.BindingSource result)
+        public void AddTable(List<Flight> result)
         {
             Paragraph para = document.Content.Paragraphs.Add(ref missing);
             Table firstTable = document.Tables.Add(para.Range, (int)result.Count + 1, 3, ref missing, ref missing);
-            String[] Coulmn = new String[] { "Прізвище", "І'мя", "Оцінка" };
+
+        String[] Coulmn = new String[] { "Номер", "Місто", "Час", "Вільні місця" };
 
             firstTable.Borders.Enable = 1;
             foreach (Row row in firstTable.Rows)
@@ -99,6 +100,9 @@ namespace Aviadispetcher
                             case 3:
                                 AddStringToColmn(cell, Coulmn[2]);
                                 break;
+                            case 4:
+                                AddStringToColmn(cell, Coulmn[3]);
+                                break;
                         }
 
                     }
@@ -108,13 +112,16 @@ namespace Aviadispetcher
                         switch (cell.ColumnIndex)
                         {
                             case 1:
-                                cell.Range.Text = ((AbitResult)result[cell.RowIndex - 2]).Surname;
+                                cell.Range.Text = result[cell.RowIndex - 2].Number;
                                 break;
                             case 2:
-                                cell.Range.Text = ((AbitResult)result[cell.RowIndex - 2]).Name;
+                                cell.Range.Text = result[cell.RowIndex - 2].City;
                                 break;
                             case 3:
-                                cell.Range.Text = ((AbitResult)result[cell.RowIndex - 2]).Mark.ToString();
+                                cell.Range.Text = result[cell.RowIndex - 2].DepatureTime;
+                                break;
+                            case 4:
+                                cell.Range.Text = result[cell.RowIndex - 2].FreeSeats;
                                 break;
                         }
                     }
