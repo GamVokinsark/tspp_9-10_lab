@@ -20,6 +20,7 @@ namespace Aviadispetcher
     public partial class MainWindow : Window
     {
         int flightNum;
+        int flightCount;
         bool flightAdd = false;
         public List<Flight> fList = new List<Flight>(85);
 
@@ -39,13 +40,25 @@ namespace Aviadispetcher
 
             if (flightAdd)
             {
-                //flightCount = flightCount + 1;
-                FlightList.Items.Add(String.Format("{0,-8} {1,-12} {2,8}",
+                flightCount = flightCount + 1;
+                SelectXList.Items.Add(String.Format("{0,-8} {1,-12} {2,8}",
                     fList[num].Number, fList[num].City, fList[num].DepatureTime));
             }
             else
-                FlightList.Items[num] = String.Format("{0,-8} {1,-12} {2,8}",
+                SelectXList.Items[num] = String.Format("{0,-8} {1,-12} {2,8}",
                     fList[num].Number, fList[num].City, fList[num].DepatureTime);
+        }
+
+        private void FillCityList()
+        {
+            if (fList.Count < 1)
+                return;
+            bool nameExist = false;
+            cityList.Items.Add(fList[0].City);
+            for (int i = 1; i < flightCount; i++)
+            {
+
+            }
         }
 
         private void LoadDataMenuItem_Click(object sender, RoutedEventArgs e)
@@ -60,23 +73,24 @@ namespace Aviadispetcher
                 MessageBox.Show(ex.Message + char.ConvertFromUtf32(13), 
                     "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            DBUtils.OpenDbFile();
+            DBUtils.OpenDbFile(fList);
+            FlightListDG.ItemsSource = fList;
         }
 
         private void InfoFlightForm_Loaded(object sender, RoutedEventArgs e)
         {
             //OpenExcelDoc();
-            //groupBox1.Visibility = Visibility.Hidden;
+            groupBox1.Visibility = Visibility.Hidden;
             //groupBox2.Visibility = Visibility.Hidden;
             groupBox3.Visibility = Visibility.Hidden;
         }
 
         private void SelectXMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //groupBox1.Visibility = Visibility.Visible;
+            groupBox1.Visibility = Visibility.Visible;
             Width = 380;
             Height = 290;
-            //FillCityList();
+            FillCityList();
             groupBox3.Visibility = Visibility.Hidden;
         }
 
@@ -105,26 +119,27 @@ namespace Aviadispetcher
 
         private void FlightList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (FlightList.SelectedIndex < 0)
+            if (SelectXList.SelectedIndex < 0)
                 return;
             Flight currFlight = new Flight();
-            currFlight = fList[FlightList.SelectedIndex];
+            currFlight = fList[SelectXList.SelectedIndex];
             cityFlightTextBox.Text = currFlight.City;
             timeFlightTextBox.Text = ((currFlight.DepatureTime.Length==4)?"0":"") 
                                                     + currFlight.DepatureTime;
             numFlightTextBox.Text = currFlight.Number;
             freeSeatsTextBox.Text = currFlight.FreeSeats;
-            flightNum = FlightList.SelectedIndex;
+            flightNum = SelectXList.SelectedIndex;
         }
 
         private void SaveDataMenuItem_Click(object sender, RoutedEventArgs e)
         {
             /*if (groupBox1.Visibility == Visibility.Visible ||
             groupBox2.Visibility == Visibility.Visible)
-                WordUtils.WriteData(selectedCityList, senderlectedCityTimeList);
+                SaveDataButton_Click(null, null);
                 */
             if (groupBox3.Visibility == Visibility.Visible)
-                ChangeFlightListData(flightNum);
+                ; // Code to rewrite .sql file.
+            
         }
 
         private void AddDataMenuItem_Click(object sender, RoutedEventArgs e)
@@ -132,8 +147,18 @@ namespace Aviadispetcher
             groupBox3.Visibility = Visibility.Visible;
             Width = 220;
             Height = 380;
-            flightNum = FlightList.Items.Count;
+            flightCount = SelectXList.Items.Count;
             flightAdd = true;
+        }
+
+        private void SaveDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            /*if (groupBox1.Visibility == Visibility.Visible ||
+            groupBox2.Visibility == Visibility.Visible)
+                WordUtils.WriteData(selectedCityList, senderlectedCityTimeList);
+                */
+            if (groupBox3.Visibility == Visibility.Visible)
+                ChangeFlightListData(flightNum);
         }
     }
 }
