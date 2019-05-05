@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Aviadispetcher
+﻿namespace Aviadispetcher
 {
     public class Flight
     {
@@ -10,12 +7,12 @@ namespace Aviadispetcher
         {
             Number = nF;
             City = cF;
-            DepatureTime = tf;
-            FreeSeats = fS;
+            Depature_time = tf;
+            Free_seats = fS;
         }
         public string Number { get; set; }
         public string City { get; set; }
-        public string DepatureTime { get; set; }
-        public string FreeSeats { get; set; }
+        public string Depature_time { get; set; }
+        public string Free_seats { get; set; }
     }
 }

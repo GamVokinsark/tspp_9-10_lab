@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Office.Interop.Word;
-using abit = System.Windows.Forms;
 using F = System.Windows.Forms;
 
 
@@ -30,7 +27,6 @@ namespace Aviadispetcher
         /// <summary>
         /// Додає заголовок файлу.
         /// </summary>
-
         public void AddHeader()
         {
             var pText1 = document.Paragraphs.Add();
@@ -40,10 +36,10 @@ namespace Aviadispetcher
             pText1.Format.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             pText1.Range.InsertParagraphAfter();
         }
+
         /// <summary>
         /// Додає абзац 
         /// </summary>
-
         public void AddParagraphs(String text)
         {
             var pText = document.Paragraphs.Add();
@@ -54,6 +50,7 @@ namespace Aviadispetcher
             pText.Format.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             pText.Range.InsertParagraphAfter();
         }
+
         /// <summary>
         /// Генерує заголовок таблиці.
         /// </summary>
@@ -118,16 +115,17 @@ namespace Aviadispetcher
                                 cell.Range.Text = result[cell.RowIndex - 2].City;
                                 break;
                             case 3:
-                                cell.Range.Text = result[cell.RowIndex - 2].DepatureTime;
+                                cell.Range.Text = result[cell.RowIndex - 2].Depature_time;
                                 break;
                             case 4:
-                                cell.Range.Text = result[cell.RowIndex - 2].FreeSeats;
+                                cell.Range.Text = result[cell.RowIndex - 2].Free_seats;
                                 break;
                         }
                     }
                 }
             }
         }
+
         /// <summary>
         /// Зберігає Word файл до обраної папки.
         /// </summary>
@@ -146,6 +144,7 @@ namespace Aviadispetcher
                 //F.MessageBox.Show(dlg.FileName, "Помилка");
             }
         }
+
         /// <summary>
         /// Закриває Word програму.
         /// </summary>

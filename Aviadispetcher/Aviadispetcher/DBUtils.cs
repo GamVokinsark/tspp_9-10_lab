@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MySql.Data;
 using MySql.Data.MySqlClient;
 //using System.Windows.Forms;
 using System.Windows;
@@ -18,7 +15,7 @@ namespace Aviadispetcher
             try
             {
                 //рядок з'єднання з БД
-                string connStr = "Server = localhost; Database = aviadispetcher; Uid = root; Pwd = ;";
+                string connStr = "Server=37.46.247.230;port=3306;Database=aviadispetcher;User Id=root;password=xrxrxrxrxrxrxrxrxrxr;";
                 MySqlConnection conn = new MySqlConnection(connStr);
                 MySqlCommand command = new MySqlCommand();
                 //запис вибору даних із БД
@@ -34,15 +31,15 @@ namespace Aviadispetcher
                 while (reader.Read())
                 {
                     //формувати запис про рейс, зчитаного із БД
-                    fList.Add(new Flight((string)reader["Number"], (string)reader["City"], (string)reader["DepatureTime"],
-                                (string)reader["FreeSeats"]));
+                    fList.Add(new Flight((string)reader["number"], (string)reader["city"], ((TimeSpan)reader["depature_time"]).ToString(),
+                                ((int)reader["free_seats"]).ToString()));
                 }
                 reader.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show((ex.Message + char.ConvertFromUtf32(13)
-                        + char.ConvertFromUtf32(13) + "Для завантаження файлу" +
+                        + char.ConvertFromUtf32(13) + "Для завантаження файлу " +
                         "виконайте команду Файл-Завантажити"), "Помилка",
                         MessageBoxButton.OK, MessageBoxImage.Error);
             }
