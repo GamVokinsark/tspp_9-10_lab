@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Aviadispetcher
 {
@@ -19,13 +10,14 @@ namespace Aviadispetcher
     /// </summary>
     public partial class MainWindow : Window
     {
-        int flightNum;
-        int flightCount;
-        bool flightAdd = false;
+        private int flightNum;
+        private int flightCount;
+        private bool flightAdd = false;
         public List<Flight> fList = new List<Flight>(85);
         public List<Flight> selectedCityList = new List<Flight>();
         public List<Flight> selectedCityTimeList = new List<Flight>();
-        DateTime timeFlight;
+        private DateTime timeFlight;
+        public static int logUser;
 
         public MainWindow()
         {
@@ -132,6 +124,14 @@ namespace Aviadispetcher
 
         private void InfoFlightForm_Loaded(object sender, RoutedEventArgs e)
         {
+            if (logUser == 1)
+            {
+                mainMenu.Items.Remove(mainMenu.Items[1]);
+            }
+            else if (logUser == 2)
+            {
+                mainMenu.Items.Remove(mainMenu.Items[2]);
+            }
             groupBox1.Visibility = Visibility.Hidden;
             groupBox2.Visibility = Visibility.Hidden;
             groupBox3.Visibility = Visibility.Hidden;

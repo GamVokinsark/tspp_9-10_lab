@@ -9,7 +9,6 @@ namespace Aviadispetcher
 {
     class DBUtils
     {
-
         public static void OpenDbFile(List<Flight> fList)
         {
             try

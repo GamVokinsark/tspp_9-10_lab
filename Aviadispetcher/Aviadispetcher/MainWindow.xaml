@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Інформація про рейси" Loaded="InfoFlightForm_Loaded" Width="670" Height="527" ResizeMode="NoResize">
     <Grid Margin="0,0,2,-3">
-        <Menu Height="21" VerticalAlignment="Top">
+        <Menu x:Name="mainMenu" Height="21" VerticalAlignment="Top">
             <MenuItem Name="FileMenuItem" Header="Файл">
                 <MenuItem Name="LoadDataMenuItem" Header="Завантажити" Click="LoadDataMenuItem_Click"/>
                 <MenuItem Name="SaveDataMenuItem" Header="Зберегти" Click="SaveDataMenuItem_Click"/>
