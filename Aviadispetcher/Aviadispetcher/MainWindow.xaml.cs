@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Aviadispetcher
 {
+
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        Excel.Application exApp;
+        Excel.Workbook exWorkbook;
+        Excel.Worksheet exSheet;
+        Excel.Range exRange;
         private int flightNum;
         private int flightCount;
         private bool flightAdd = false;
@@ -124,6 +131,7 @@ namespace Aviadispetcher
 
         private void InfoFlightForm_Loaded(object sender, RoutedEventArgs e)
         {
+            OpenExcelDoc();
             if (logUser == 1)
             {
                 mainMenu.Items.Remove(mainMenu.Items[1]);
@@ -137,6 +145,59 @@ namespace Aviadispetcher
             groupBox3.Visibility = Visibility.Hidden;
             Width = 310;
             Height = 290;
+        }
+
+        private void OpenExcelDoc()
+        {
+            try
+            {
+                exApp = new Excel.Application();
+                string FilePath = System.Windows.Forms.Application.StartupPath;
+                exWorkbook = exApp.Workbooks.Open(FilePath + "\\Розклад рейсів.xls");
+                exApp.Quit();
+            }
+            catch (Exception ex)
+            {
+                if (exApp != null)
+                    exApp.Quit();
+                MessageBox.Show(ex.Message + "\n\r\n\r" + 
+                    "Для завантаження файлу виконайте команду файл-Завантажити.", 
+                    "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ReadExcelDoc()
+        {
+            try { exSheet = (Excel.Worksheet)exWorkbook.Worksheets.get_Item(1); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            int i = 0;
+            do 
+            {
+                for (int j = 1; j < 5; j++)
+                {
+                    try { exRange = (Excel.Range)exSheet.Cells[i + 2, j]; }
+                    catch (Exception ex) { MessageBox.Show(ex.Message); }
+                    switch (j)
+                    {
+                        case 1:
+                            fList[i].Number = (string)exRange.Text;
+                            break;
+                        case 2:
+                            fList[i].City = (string)exRange.Text;
+                            break;
+                        case 3:
+                            fList[i].Depature_time = (string)exRange.Text;
+                            break;
+                        case 4:
+                            fList[i].Free_seats = (string)exRange.Text;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            } while (exRange.Text != "");
+            if(fList[i].Number != null)
+                FlightListDG.Items.Add(fList[i]);
         }
 
         private void SelectXMenuItem_Click(object sender, RoutedEventArgs e)
@@ -262,11 +323,12 @@ namespace Aviadispetcher
         {
             selectXYList.Items.Clear();
             selectedCityTimeList.Clear();
+            DateTime tempTime;
             if (!DateTime.TryParse(sTime.Text, out timeFlight))
                 return;
             foreach (Flight fl in selectedCityList)
             {
-                if (!DateTime.TryParse(fl.Depature_time, out DateTime tempTime))
+                if (!DateTime.TryParse(fl.Depature_time, out tempTime))
                     return;
                 if (timeFlight.TimeOfDay <= tempTime.TimeOfDay)
                 {

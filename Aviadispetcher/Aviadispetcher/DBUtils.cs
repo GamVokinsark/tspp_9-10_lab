@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-//using System.Windows.Forms;
 using System.Windows;
-//...
 
 namespace Aviadispetcher
 {

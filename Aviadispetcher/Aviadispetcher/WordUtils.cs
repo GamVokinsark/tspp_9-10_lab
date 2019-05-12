@@ -125,7 +125,6 @@ namespace Aviadispetcher
                 }
             }
         }
-
         /// <summary>
         /// Зберігає Word файл до обраної папки.
         /// </summary>
@@ -144,7 +143,6 @@ namespace Aviadispetcher
                 //F.MessageBox.Show(dlg.FileName, "Помилка");
             }
         }
-
         /// <summary>
         /// Закриває Word програму.
         /// </summary>
@@ -154,5 +152,4 @@ namespace Aviadispetcher
             app.Quit();
         }
     }
-
 }
