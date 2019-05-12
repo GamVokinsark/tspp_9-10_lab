@@ -131,7 +131,7 @@ namespace Aviadispetcher
 
         private void InfoFlightForm_Loaded(object sender, RoutedEventArgs e)
         {
-            //OpenExcelDoc();
+            OpenExcelDoc();
             if (logUser == 1)
             {
                 mainMenu.Items.Remove(mainMenu.Items[1]);
@@ -153,7 +153,7 @@ namespace Aviadispetcher
             {
                 exApp = new Excel.Application();
                 string FilePath = System.Windows.Forms.Application.StartupPath;
-                exWorkbook = exApp.Workbooks.Open(FilePath + "\\Розклад рейсів.xls");
+                exWorkbook = exApp.Workbooks.Open(FilePath + "\\FlightsSchedule.xls");
                 exApp.Quit();
             }
             catch (Exception ex)
