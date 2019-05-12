@@ -131,7 +131,7 @@ namespace Aviadispetcher
 
         private void InfoFlightForm_Loaded(object sender, RoutedEventArgs e)
         {
-            OpenExcelDoc();
+            //OpenExcelDoc();
             if (logUser == 1)
             {
                 mainMenu.Items.Remove(mainMenu.Items[1]);
@@ -279,18 +279,22 @@ namespace Aviadispetcher
 
         private void ChooseButton_Click(object sender, RoutedEventArgs e)
         {
-            selectedCityList.Clear();
             if (cityList.SelectedIndex < 0)
                 return;
-            string selCity = Convert.ToString(cityList.Items[cityList.SelectedIndex]);
+            selectedCityList = SelectX(Convert.ToString(cityList.Items[cityList.SelectedIndex]));
+        }
 
+        private List<Flight> SelectX(string selCity = "")
+        {
+            List<Flight> selectedCityList = new List<Flight>(10);
             SelectXList.Items.Clear();
             foreach (Flight fl in fList)
                 if (fl.City == selCity)
+                {
                     selectedCityList.Add(fl);
-
-            foreach (Flight fl in selectedCityList)
-                SelectXList.Items.Add(fl.Number + " " + fl.Depature_time);
+                    SelectXList.Items.Add(fl.Number + " " + fl.Depature_time);
+                }
+            return selectedCityList;
         }
 
         private void ChangeDataButton_Click(object sender, RoutedEventArgs e)
@@ -321,21 +325,28 @@ namespace Aviadispetcher
 
         private void ChooseYButton_Click(object sender, RoutedEventArgs e)
         {
-            selectXYList.Items.Clear();
-            selectedCityTimeList.Clear();
-            DateTime tempTime;
             if (!DateTime.TryParse(sTime.Text, out timeFlight))
                 return;
+            selectedCityTimeList = SelectXY(timeFlight);
+        }
+
+        private List<Flight> SelectXY(DateTime timeFlight)
+        {
+            List<Flight> selectedCityTimeList = new List<Flight>(10);
+            selectXYList.Items.Clear();
+            DateTime tempTime;
+            
             foreach (Flight fl in selectedCityList)
             {
                 if (!DateTime.TryParse(fl.Depature_time, out tempTime))
-                    return;
+                    return null;
                 if (timeFlight.TimeOfDay <= tempTime.TimeOfDay)
                 {
                     selectedCityTimeList.Add(fl);
                     selectXYList.Items.Add(fl.Depature_time + " Місць: " + fl.Free_seats);
                 }
             }
+            return selectedCityTimeList;
         }
     }
 }
